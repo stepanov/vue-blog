@@ -5,11 +5,17 @@
     </header>
     <main>
       <aside class="sidebar">
-        <div v-for="post in posts">
-          res: {{ post.title }}
-        </div>
+        <router-link
+          v-for="post in posts"
+          :key="post.id"
+          active-class="is-active"
+          class="link"
+          :to="{ name: 'name', params: { id: post.id } }">
+            {{ post.id }}. {{ post.title }}
+        </router-link>
       </aside>
       <div class="content">
+        <router-view></router-view>
       </div>
     </main>
   </div>
@@ -18,6 +24,7 @@
 <script>
   import axios from 'axios'
   export default {
+    props: ['id'],
     data () {
       return {
         posts: null,
@@ -28,13 +35,24 @@
       this.getAllPosts();
     },
     methods: {
+      getPost(id) {
+        axios(this.endpoint + id)
+          .then(response => {
+            this.post = response.data
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      created() {
+        this.getPost(this.id);
+      },
       getAllPosts() {
         axios.get(this.endpoint)
           .then(response => {
             this.posts = response.data
           })
           .catch(error => {
-            console.log("-------------error-----------");
             console.log(error);
           })
       }
