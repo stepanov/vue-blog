@@ -5,14 +5,16 @@
     </header>
     <main>
       <aside class="sidebar">
+        <router-link :to="{ name: 'Home' }">Home</router-link><br/>
         <router-link
           v-for="post in posts"
           :key="post.id"
           active-class="is-active"
           class="link"
-          :to="{ name: 'name', params: { id: post.id } }">
+          :to="{ name: 'post', params: { id: post.id } }">
             {{ post.id }}. {{ post.title }}
         </router-link>
+        <br/>here<br/>
       </aside>
       <div class="content">
         <router-view></router-view>
