@@ -31,8 +31,9 @@
         endpoint: 'https://jsonplaceholder.typicode.com/posts/'
       }
     },
-    created() {
+    created () {
       this.getAllPosts();
+      this.getPost(this.id);
     },
     methods: {
       getPost(id) {
@@ -43,9 +44,6 @@
           .catch(error => {
             console.log(error)
           })
-      },
-      created() {
-        this.getPost(this.id);
       },
       getAllPosts() {
         axios.get(this.endpoint)
